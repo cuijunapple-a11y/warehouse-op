@@ -1,0 +1,10 @@
+{
+  "name": "warehouse-ops",
+  "version": "1.0.0",
+  "description": "仓库库内运营管理系统 / Warehouse Operations Management System",
+  "private": true,
+  "scripts": {
+    "dev": "npx wrangler pages dev ./src --kv WAREHOUSE_KV",
+    "deploy": "npx wrangler pages deploy ./src"
+  }
+}

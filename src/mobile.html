@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0e1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>仓库打卡 | Warehouse Clock-in</title>
+
+  <!-- Google Fonts: Inter (English) + Noto Sans SC (Chinese) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SCREEN 1: CODE INPUT
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="screen-code" class="screen active">
+
+    <header class="screen-header">
+      <div class="screen-header__title-cn">仓库打卡系统</div>
+      <div class="screen-header__title-en">Warehouse Clock-in</div>
+    </header>
+
+    <!-- Code dots -->
+    <div class="code-dots" aria-label="员工代码 / Employee code">
+      <div class="code-dot" aria-hidden="true"></div>
+      <div class="code-dot" aria-hidden="true"></div>
+      <div class="code-dot" aria-hidden="true"></div>
+      <div class="code-dot" aria-hidden="true"></div>
+    </div>
+
+    <!-- Error message -->
+    <div id="error-message" class="error-message" role="alert" aria-live="polite"></div>
+
+    <!-- Loading spinner -->
+    <div id="spinner-code" class="spinner" aria-label="加载中..."></div>
+
+    <!-- Numpad -->
+    <div class="numpad" role="group" aria-label="数字键盘 / Numpad">
+      <button class="numpad-btn" data-role="digit" data-value="1" type="button" aria-label="1">1</button>
+      <button class="numpad-btn" data-role="digit" data-value="2" type="button" aria-label="2">2</button>
+      <button class="numpad-btn" data-role="digit" data-value="3" type="button" aria-label="3">3</button>
+      <button class="numpad-btn" data-role="digit" data-value="4" type="button" aria-label="4">4</button>
+      <button class="numpad-btn" data-role="digit" data-value="5" type="button" aria-label="5">5</button>
+      <button class="numpad-btn" data-role="digit" data-value="6" type="button" aria-label="6">6</button>
+      <button class="numpad-btn" data-role="digit" data-value="7" type="button" aria-label="7">7</button>
+      <button class="numpad-btn" data-role="digit" data-value="8" type="button" aria-label="8">8</button>
+      <button class="numpad-btn" data-role="digit" data-value="9" type="button" aria-label="9">9</button>
+      <button class="numpad-btn numpad-btn--backspace" data-role="backspace" type="button" aria-label="删除 / Backspace">⌫</button>
+      <button class="numpad-btn" data-role="digit" data-value="0" type="button" aria-label="0">0</button>
+      <button class="numpad-btn numpad-btn--confirm disabled" data-role="confirm" id="btn-confirm" type="button" aria-label="确认 / Confirm">✓</button>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SCREEN 2: ACTION SELECTION
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="screen-actions" class="screen">
+
+    <header class="screen-header">
+      <div id="welcome-cn" class="screen-header__welcome-cn">欢迎</div>
+      <div id="welcome-en" class="screen-header__welcome-en">Welcome</div>
+    </header>
+
+    <div class="actions-grid" role="group" aria-label="操作选择 / Action Selection">
+
+      <button class="action-btn action-btn--checkin" data-action="checkin" type="button">
+        <span class="action-btn__icon" aria-hidden="true">✅</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">到岗</span>
+          <span class="action-btn__label-en">Check In</span>
+        </span>
+      </button>
+
+      <button class="action-btn action-btn--take-task" data-action="take-task" type="button">
+        <span class="action-btn__icon" aria-hidden="true">📋</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">领任务</span>
+          <span class="action-btn__label-en">Take Task</span>
+        </span>
+      </button>
+
+      <button class="action-btn action-btn--return-task" data-action="return-task" type="button">
+        <span class="action-btn__icon" aria-hidden="true">📦</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">还任务</span>
+          <span class="action-btn__label-en">Return Task</span>
+        </span>
+      </button>
+
+      <button class="action-btn action-btn--break" data-action="break" type="button">
+        <span class="action-btn__icon" aria-hidden="true">☕</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">休息</span>
+          <span class="action-btn__label-en">Break</span>
+        </span>
+      </button>
+
+      <button class="action-btn action-btn--lunch" data-action="lunch" type="button">
+        <span class="action-btn__icon" aria-hidden="true">🍽️</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">午餐</span>
+          <span class="action-btn__label-en">Lunch</span>
+        </span>
+      </button>
+
+      <button class="action-btn action-btn--checkout" data-action="checkout" type="button">
+        <span class="action-btn__icon" aria-hidden="true">🚪</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">下班</span>
+          <span class="action-btn__label-en">Check Out</span>
+        </span>
+      </button>
+
+      <button class="action-btn action-btn--transfer" data-action="transfer" type="button">
+        <span class="action-btn__icon" aria-hidden="true">🔄</span>
+        <span class="action-btn__label">
+          <span class="action-btn__label-cn">借调</span>
+          <span class="action-btn__label-en">Transfer</span>
+        </span>
+      </button>
+
+    </div>
+
+    <footer class="screen-footer">
+      <button class="btn-back" id="btn-logout" type="button">
+        ← 返回 / Back
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SCREEN 3: SUB-ACTION INPUT
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="screen-input" class="screen">
+
+    <header class="screen-header">
+      <div class="screen-header__title-cn">操作详情</div>
+      <div class="screen-header__title-en">Action Details</div>
+    </header>
+
+    <!-- Task number input (for 领任务 / Take Task) -->
+    <div id="input-task" class="input-section">
+      <div class="input-section__title-cn">请输入任务编号</div>
+      <div class="input-section__title-en">Enter Task Number</div>
+      <input
+        type="text"
+        id="task-number-input"
+        class="input-field"
+        placeholder="任务编号 / Task No."
+        autocomplete="off"
+        inputmode="text"
+        maxlength="20"
+      >
+      <button class="btn-submit" id="btn-submit-task" type="button">
+        确认 / Confirm
+      </button>
+    </div>
+
+    <!-- Group selection (for 借调 / Transfer) -->
+    <div id="input-group" class="input-section">
+      <div class="input-section__title-cn">选择目标组</div>
+      <div class="input-section__title-en">Select Target Group</div>
+      <div class="group-grid">
+        <button class="group-btn" data-group="maintenance" type="button">
+          <span class="action-btn__label">
+            <span class="group-btn__label-cn">🔧 库维</span>
+            <span class="group-btn__label-en">Maintenance</span>
+          </span>
+        </button>
+        <button class="group-btn" data-group="shelving" type="button">
+          <span class="action-btn__label">
+            <span class="group-btn__label-cn">📥 上架</span>
+            <span class="group-btn__label-en">Shelving</span>
+          </span>
+        </button>
+        <button class="group-btn" data-group="outbound" type="button">
+          <span class="action-btn__label">
+            <span class="group-btn__label-cn">📤 出库</span>
+            <span class="group-btn__label-en">Outbound</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <footer class="screen-footer">
+      <button class="btn-back" id="btn-back-input" type="button">
+        ← 返回 / Back
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SUCCESS OVERLAY
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-success" class="overlay-success" role="status" aria-live="assertive">
+    <svg class="overlay-success__check" viewBox="0 0 80 80" aria-hidden="true">
+      <circle cx="40" cy="40" r="36" />
+      <circle class="check-circle-bg" cx="40" cy="40" r="36" />
+      <path class="check-path" d="M24 42 L34 52 L56 30" />
+    </svg>
+    <div id="overlay-text-cn" class="overlay-success__text-cn"></div>
+    <div id="overlay-text-en" class="overlay-success__text-en"></div>
+  </div>
+
+  <script src="js/mobile.js"></script>
+</body>
+</html>

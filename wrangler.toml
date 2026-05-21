@@ -1,0 +1,13 @@
+name = "warehouse-ops"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "./src"
+
+# KV Namespace binding — replace the id after running:
+#   npx wrangler kv namespace create WAREHOUSE_KV
+[[kv_namespaces]]
+binding = "WAREHOUSE_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# Environment variables — set via Cloudflare Dashboard or:
+#   npx wrangler pages secret put ADMIN_PASSWORD
+#   npx wrangler pages secret put QR_SECRET
