@@ -13,4 +13,4 @@ pages_build_output_dir = "./src"
 
 [[kv_namespaces]]
 binding = "WAREHOUSE_KV"
-id = "7ff1a5665b904939b0541fc824321840"
+id = "420c8ef9db4d4b6f9456f8f8bbc369ac"
