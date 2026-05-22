@@ -10,3 +10,9 @@ pages_build_output_dir = "./src"
 #   Settings → Environment variables
 #   ADMIN_PASSWORD = your admin password
 #   QR_SECRET = your QR code secret key
+
+[[
+kv_namespaces
+]]
+binding = "WAREHOUSE_KV"
+id = "7ff1a5665b904939b0541fc824321840"
